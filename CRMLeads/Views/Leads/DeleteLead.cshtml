@@ -1,0 +1,66 @@
+﻿@model CRMLeads.Models.LeadsEntity
+
+@{
+    ViewData["Title"] = "Delete Details";
+}
+
+<div class="container ">
+    <div class="col-md">
+        <form asp-action="DeleteLeadDetails">
+
+            <input asp-for="Id" hidden />
+
+            <h2>Delete List</h2>
+            <hr />
+
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="LeadDate" class="control-label"></label>
+                        <input asp-for="LeadDate" class="form-control" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EmailAddress" class="control-label"></label>
+                        <input asp-for="EmailAddress" class="form-control" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Mobile" class="control-label"></label>
+                        <input asp-for="Mobile" class="form-control" readonly />
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="LeadSource" class="control-label"></label>
+                        <input asp-for="LeadSource" class="form-control" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LeadStatus" class="control-label"></label>
+                        <input asp-for="LeadStatus" class="form-control" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NextFollowUpDate" class="control-label"></label>
+                        <input asp-for="NextFollowUpDate" class="form-control" readonly />
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="col-md-4 ">
+                <div class="form-group row">
+
+                    <input class="btn btn-secondary justify-content-md-center   col ms-3" type="submit" value="Delete" />
+
+                    <a asp-controller="Leads" asp-action="Index" class="btn btn-outline-light col ms-3  ">Back to List</a>
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+</div>
+

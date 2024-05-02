@@ -51,7 +51,44 @@ namespace CRMLeads.Data
             return LeadsListEntity;
 
         }
-         
+
+        public LeadsEntity GetLeadById(int Id)
+        {
+            LeadsEntity LeadsListEntity = new LeadsEntity();
+
+            SqlCommand cmd = new SqlCommand("GetLeadDetailsById", _connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            SqlParameter param;
+
+            cmd.Parameters.Add(new SqlParameter("@Id", Id));
+
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
+            DataTable dt = new DataTable();
+
+            dataAdapter.Fill(dt);
+
+            foreach (DataRow dr in dt.Rows)
+            {
+                LeadsListEntity = new LeadsEntity
+                {
+                    Id = Convert.ToInt32(dr["id"]),
+                    LeadDate = Convert.ToDateTime(dr["LeadDate"]),
+                    Name = dr["name"].ToString(),
+                    EmailAddress = dr["EmailAddress"].ToString(),
+                    Mobile = dr["Mobile"].ToString(),
+                    LeadSource = dr["LeadSource"].ToString(),
+                    LeadStatus = dr["LeadStatus"].ToString(),
+                    NextFollowUpDate = Convert.ToDateTime(dr["NextFollowUpDate"]),
+                };
+                    
+
+
+            }
+
+            return LeadsListEntity;
+
+        }
 
 
         public bool AddLead(LeadsEntity  lead)
@@ -86,7 +123,71 @@ namespace CRMLeads.Data
                 return false;
             }
 
+        }
+
+        public bool EditLeadDetails(int Id ,LeadsEntity lead)
+        {
+            SqlCommand cmd = new SqlCommand("EditLead", _connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+
+
+            cmd.Parameters.AddWithValue("@Id", Id);
+            cmd.Parameters.AddWithValue("@LeadDate", lead.LeadDate);
+            cmd.Parameters.AddWithValue("@Name", lead.Name);
+            cmd.Parameters.AddWithValue("@EmailAddress", lead.EmailAddress);
+            cmd.Parameters.AddWithValue("@Mobile", lead.Mobile);
+            cmd.Parameters.AddWithValue("@LeadSource", lead.LeadSource);
+            cmd.Parameters.AddWithValue("@LeadStatus", lead.LeadStatus);
+            cmd.Parameters.AddWithValue("@NextFollowUpDate", lead.NextFollowUpDate);
+
+
+            _connection.Open();
+
+            int i = cmd.ExecuteNonQuery();
+
+            _connection.Close();
+
+            if (i >= 1)
+            {
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
 
         }
+
+
+
+        public bool DeleteLeadDetails(int Id)
+        {
+            SqlCommand cmd = new SqlCommand("DeleteLeadDetails", _connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+            cmd.Parameters.AddWithValue("@Id", Id);
+
+            _connection.Open();
+
+            int i = cmd.ExecuteNonQuery();
+
+            _connection.Close();
+
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
+
+
     }
 }

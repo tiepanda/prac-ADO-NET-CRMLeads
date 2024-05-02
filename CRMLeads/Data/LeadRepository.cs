@@ -52,5 +52,41 @@ namespace CRMLeads.Data
 
         }
          
+
+
+        public bool AddLead(LeadsEntity  lead)
+        {
+            SqlCommand cmd = new SqlCommand("AddLead",_connection);
+            cmd.CommandType = System.Data.CommandType.StoredProcedure;
+
+
+
+            cmd.Parameters.AddWithValue("@LeadDate", lead.LeadDate);
+            cmd.Parameters.AddWithValue("@Name", lead.Name);
+            cmd.Parameters.AddWithValue("@EmailAddress", lead.EmailAddress);
+            cmd.Parameters.AddWithValue("@Mobile", lead.Mobile);
+            cmd.Parameters.AddWithValue("@LeadSource", lead.LeadSource);
+            cmd.Parameters.AddWithValue("@LeadStatus", lead.LeadStatus);
+            cmd.Parameters.AddWithValue("@NextFollowUpDate", lead.NextFollowUpDate);
+
+
+            _connection.Open();
+
+            int i =cmd.ExecuteNonQuery();
+
+            _connection.Close();
+
+            if (i>=1)
+            {
+                return true;
+
+            }
+            else
+            {
+                return false;
+            }
+
+
+        }
     }
 }
